@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  </head>
+    </head>
+    <body>
+      <div class="container">
+        <div class ="row">
+          <header class="bgimage">
+            <div class="panel panel-default col-xs-3 col-xs-offset-1 offset_top">
+              <div >
+                <h1 class="">Pocket Juke<h1>
+              </div>
+              <div class="panel-body">
+                Your personal DJ
+              </div>
+            </div>
+          </header>
+        </div>
+
+        <div class='row'>
+          <div class='col-xs-offset-1 col-xs-10  col-md-offset-2 col-md-3 col-sm-offset-1 col-sm-4'>
+            <div class='Panel tile tile-medium tile-red'>
+                <a href="/start">
+                  <h1>Start a Party</h1>
+                </a>
+            </div>
+          </div>
+          <div class='col-xs-offset-1 col-xs-10 col-md-offset-2 col-md-3 col-sm-offset-2 col-sm-4'>
+            <div class='panel tile tile-medium tile-red'>
+                <a href="/join">
+                  <h1>Join a Party</h1>
+                </a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-offset-5">
+                <button type="button" onclick="window.location='{{ url|safe }}'"class="btn btn-default">Logout
+            </div>
+        </div>
+      </div>
+
+    </body>
+</html>

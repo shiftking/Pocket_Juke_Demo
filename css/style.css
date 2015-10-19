@@ -1,0 +1,11 @@
+.bgimage{
+
+  background-image: url('juke.jpg');
+  background-position: center center;
+  background-size: cover;
+  height: 200px;
+
+}
+.offset_top{
+  margin-top: 10px;
+}
