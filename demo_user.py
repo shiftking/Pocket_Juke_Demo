@@ -13,21 +13,21 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-#DEFAULT_PARTY_NAME = 'default_party'
+DEFAULT_PARTY_NAME = 'default_party'
 
 
-#def default_party_key(default_party=DEFAULT_DEMO_USER_NAME):
-#    """Constructs a Datastore key for a Party entity.
-#    We use partyname as the key.
+def party_key(default_party=DEFAULT_PARTY_NAME):
+   """Constructs a Datastore key for a Party entity.
+   We use partyname as the key.
 
-#    """
-#    return ndb.Key('partyname', partyname)
+   """
+   return ndb.Key('partyname', partyname)
 
 
-#class User(ndb.Model):
-#   """Sub Model representing the user"""
-#   party_number = ndb.StructuredProperty(Party)
-#   email = ndb.StringProperty(indexed=False)
+class User(ndb.Model):
+   """Sub Model representing the user"""
+   party_number = ndb.StructuredProperty(Party)
+   identity = ndb.StringProperty(indexed=False)
 
 
 #class Song(ndb.Model):
@@ -36,12 +36,31 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 #    artist = ndb.StringProperty(indexed=False)
 #    song_position = ndb.IntegerProperty()
 #    user_sugest = ndb.StringProperty()
-#     party_number = ndb.StructuredProperty()
+#    party_number = ndb.StructuredProperty()
 #    song_uli = ndb.StringProperty()
 
-#class Party(ndb.Model):
-#   """main model to represent a party"""
-#   party = ndb.IntegerProperty()
+class Party(ndb.Model):
+   """main model to represent a party"""
+   party = ndb.IntegerProperty(indexed=False)
+   code = ndb.StringProperty(indexed=False);
+
+
+class party(webapp2.RequestHandler):
+
+
+    def get(self):
+
+        user = users.get_current_user();
+        if(user):
+
+
+        else:
+            url = users.create_login_url(self.request.uri)
+
+            url_linktext = 'Login'
+            template = JINJA_ENVIRONMENT.get_template('login.html')
+
+
 
 
 
@@ -105,6 +124,24 @@ class Start(webapp2.RequestHandler):
         #    party_code = self.request.get('partycode')
 
         #    party = Party(parent=)
+    def post(self):
+        party_name = self.request.get('party_name',DEFAULT_PARTY_NAME)
+
+        party = Part(parent=party_key(party_name))
+
+        party.partycode = self.request.get('party_code')
+
+        #and by default it changes the party the user is at
+
+        user = users.get_current_user().
+
+
+
+
+
+
+
+
 
 class Join(webapp2.RequestHandler):
     def get(self):
