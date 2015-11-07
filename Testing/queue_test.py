@@ -43,7 +43,7 @@ for i in range(1,400):
     }
     activity_queue.append(entry)
 
-sorted_activity_queue = sorted(activity_queue,key = operator.itemgetter('name','date_sub'))
+    sorted_activity_queue = sorted(activity_queue,key = operator.itemgetter('name','date_sub'))
 #print the current activity queue
 for a in sorted_activity_queue:
     print a["name"],a['date_sub']
@@ -82,7 +82,7 @@ def find_index(dicts, key, value):
 for entry in sorted_activity_queue:
     if not any(d['name'] == entry['name'] for d in queue):
         consect_songs = 0
-        pre_entry = dummy_entry
+
         song_pos = {
             'name' : entry['name'],
             'weight' : 1,

@@ -38,28 +38,24 @@
                       <table class="table">
                         <tr>
                             <th>Party Name</th>
-                            <th>Host</th>
+
                             <th>Attending</th>
                             <th>Join</th>
+
                         </tr>
+                        {% for party in party_list%}
                         <tr>
-                            <td>John's Birthday Party</td>
-                            <td>John</td>
-                            <td>47</td>
-                            <td><button type="button" onclick="window.location='/'"class="btn btn-default">Join</button></td>
+                            <td>{{party.party_name}}</td>
+
+                            <td>{{party.attending}}</td>
+                            <td><form action="/join" method="post">
+                                <button type ="submit" class="btn btn-default">Join</button>
+                                <input type = "hidden" name = "party_id" value = "{{party.key.urlsafe()}}" >
+                                </form>
+                            </td>
+
                         </tr>
-                        <tr>
-                            <td>Terry's Graduation</td>
-                            <td>Lloyd</td>
-                            <td>22</td>
-                            <td><button type="button" onclick="window.location='/'"class="btn btn-default">Join</button></td>
-                        </tr>
-                        <tr>
-                            <td>Cyndy and Rodgers Wedding</td>
-                            <td>Rodger</td>
-                            <td>84</td>
-                            <td><button type="button" onclick="window.location='/'"class="btn btn-default">Join</button></td>
-                        </tr>
+                        {% endfor%}
 
                       </table>
               </div>

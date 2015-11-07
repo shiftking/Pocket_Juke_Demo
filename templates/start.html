@@ -32,21 +32,22 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-xs-offset-1 col-xs-6 col-md-3"
-                    <form>
+                <div class="col-xs-offset-1 col-xs-6 col-md-3">
+                    <form action="/start"method="post">
                       <div class="form-group">
                         <label for="startparty">Party Name</label>
-                        <input type="text" class="form-control" id="party_name" placeholder="Name of your party">
+                        <input type="text" class="form-control" name="party_name" placeholder="Name of your party">
                       </div>
                       <div class="form-group">
                         <label for="startparty">Party PassCode</label>
-                        <input type="password" class='form-control' id="party_code" >
+                        <input type="password" class='form-control' name="party_code" >
                       </div>
                       <div class="form-group">
                         <button type="submit" class="btn btn-default">Create Party</button>
-                        <button type="link" onclick="window.location='/';"class="btn btn-default">Home</button>
+
                       </div>
                     </form>
+                    <button type="link" onclick="window.location='/';"class="btn btn-default">Home</button>
                   </div>
               </div>
 
