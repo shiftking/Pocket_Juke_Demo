@@ -62,45 +62,45 @@ class Activity(ndb.Model):
 class MainPage(webapp2.RequestHandler):
     def get(self):
 
+        user = users.get_current_user()
 
-            user = users.get_current_user()
+        if user:
+        #checks to see if the user has been entered into the datastore before
+            q = ndb.gql("SELECT * FROM User WHERE user_id = :1",user.user_id())
+            res = q.get()
 
-            if user:
-                #checks to see if the user has been entered into the datastore before
-                q = ndb.gql("SELECT * FROM User WHERE user_id = :1",user.user_id())
-                res = q.get()
-
-                #self.response.out.write(res)
-                if res == None:
-                    #self.response.out.write("Could not find user, adding them to datastore")
-                    new_user = User(user_id=user.user_id())
-                    new_user.put()
-
-                else:
-                    if res.party_key_id:
-                        self.redirect('/party')
-
-                url = users.create_logout_url(self.request.uri)
-                url_linktext = 'Logout'
-
-                template = JINJA_ENVIRONMENT.get_template('templates/index.html')
+            #self.response.out.write(res)
+            if res == None:
+                #self.response.out.write("Could not find user, adding them to datastore")
+                new_user = User(user_id=user.user_id())
+                new_user.put()
 
             else:
-                url = users.create_login_url(self.request.uri)
+                if not res.party_key_id == None:
+                    self.redirect('/party')
 
-                url_linktext = 'Login'
-                template = JINJA_ENVIRONMENT.get_template('templates/login.html')
+            url = users.create_logout_url(self.request.uri)
+            url_linktext = 'Logout'
+
+            template = JINJA_ENVIRONMENT.get_template('templates/index.html')
+
+        else:
+            url = users.create_login_url(self.request.uri)
+
+            url_linktext = 'Login'
+            template = JINJA_ENVIRONMENT.get_template('templates/login.html')
 
 
-            template_values = {
+        template_values = {
 
-                'url': url,
-                'url_linktext': url_linktext,
-            }
-            self.response.write(template.render(template_values))
-    def post(self):
-        user = User(email=users.get_current_user().email())
-        self.redirect('/')
+        'url': url,
+        'url_linktext': url_linktext,
+        }
+
+
+        self.response.write(template.render(template_values))
+
+
 
 class Start(webapp2.RequestHandler):
     def get(self):
@@ -133,7 +133,7 @@ class Start(webapp2.RequestHandler):
                             )
 
             party_key = new_party.put()
-            res.party_key_id = str(party_key.id())
+            res.party_key_id = str(party_key.urlsafe())
 
             res.put()
 
@@ -200,10 +200,14 @@ class ActiveParty(webapp2.RequestHandler):
         user = users.get_current_user()
 
         if user:
+
+            url = users.create_logout_url(self.request.uri)
+
             template = JINJA_ENVIRONMENT.get_template('templates/party.html')
             q = ndb.gql("SELECT * FROM User WHERE user_id = :1",user.user_id())
             res = q.get()
-
+            if res.party_key_id == None:
+                self.redirect('/')
             party_id = ndb.Key(urlsafe=res.party_key_id)
             party_res = party_id.get()
 
@@ -273,12 +277,13 @@ class ActiveParty(webapp2.RequestHandler):
                     pre_entry = entry
 
             sorted_queue = sorted(queue, key=operator.itemgetter('weight'),reverse=True)
-            for item in sorted_queue:
-                self.response.out.write(item['weight'])
+            #for item in sorted_queue:
+                #self.response.out.write(item['weight'])
 
             template_values={
                 'queue': sorted_queue,
-                'party_name': party_res.party_name
+                'party_name': party_res.party_name,
+                'logout_url': url,
             }
 
             self.response.write(template.render(template_values))
@@ -317,6 +322,28 @@ class ActiveParty(webapp2.RequestHandler):
                 self.redirect('/party')
 
 
+            else:
+                url = users.create_login_url(self.request.uri)
+
+                url_linktext = 'Login'
+                template = JINJA_ENVIRONMENT.get_template('templates/login.html')
+                template_values = {
+
+                    'url': url,
+                    'url_linktext': url_linktext,
+
+                }
+                self.response.write(template.render(template_values))
+        elif response == "leave":
+            user = users.get_current_user()
+
+            if user:
+                q = ndb.gql("SELECT * FROM User WHERE user_id = :1",user.user_id())
+                res = q.get()
+                res.party_key_id = None
+                res.put()
+
+                self.redirect('/')
             else:
                 url = users.create_login_url(self.request.uri)
 
