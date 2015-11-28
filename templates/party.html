@@ -2,13 +2,14 @@
 <html lang="en">
   <head>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
   </head>
     </head>
@@ -23,7 +24,7 @@
               <div class="panel-body">
                 <div class="container">
                   <div class="row">
-                    <div class="col-xs-2">
+                    <div id="greeting" class="col-xs-2">
                         Your personal DJ
                       </div>
                       <div class="col-xs-1">
@@ -47,44 +48,54 @@
               <h1>Welcom to the Party : {{party_name}}</h1>
 
             </div>
-            <div class="row">
-              <div class="col-xs-3 col-xs-offset-2">
-                <form id="song_search" action="/party?vote=false" method="post">
-                    <input id="query"type=text name="song_name"class="form-control" placeholder="Name of a song">
-                    <button type="submit" class="btn btn-default">Submit Song</button>
-              </div>
+            <div class="container">
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="row">
+                    <form id="song_search"onsubmit="return false; "class="form-inline">
+                      <div class="form-group">
+                        <button id="butt" type="submit" class="btn btn-default">Submit Song</button>
+                      </div>
+                      <div class="form-group">
+                        <input id="query" type="text" name="song_name"class="form-control" placeholder="Name of a song">
+                      </div>
+                  </div>
+                </div>
+                <div class="row dont_show" id = "results"><!--Search results -->
+                    <p>Dummy Value</p>
+
+                </div>
             </div>
-            <div class="row">
-              <div class="col-xs-8 col-xs-offset-2">
+            <div class="col-sm-6"> <!--Song queue -->
+              <table class="table">
+                  <tr>
 
-                </form>
-                  <table class="table">
-                      <tr>
+                      <th>Name</th>
+                      <th>date</th>
+                      <th>Vote</th>
+                  </tr>
+                  {% for songs in queue %}
+                  <tr>
+                      <td>{{songs['song_name']}}</td>
+                      <td>{{songs['date']}}</td>
+                      <td><form action="/party?vote=true" method="post">
+                          <button type="submit" class="btn btn-default">Vote</button>
+                          <input type="hidden" name="song_id" value="{{songs.song_id}}">
+                          </form>
 
-                          <th>Name</th>
-                          <th>date</th>
+                      </td>
 
-
-                          <th>Vote</th>
-                      </tr>
-                      {% for songs in queue %}
-                      <tr>
-                          <td>{{songs['song_name']}}</td>
-                          <td>{{songs['date']}}</td>
-                          <td><form action="/party?vote=true" method="post">
-                              <button type="submit" class="btn btn-default">Vote</button>
-                              <input type="hidden" name="song_id" value="{{songs.song_id}}">
-                              </form>
-
-                          </td>
-
-                      </tr>
-                      {% endfor %}
-                  </table>
-              </div>
+                  </tr>
+                  {% endfor %}
+              </table>
+            </div>
+          </div>
         </div>
-
     </div>
 
+          <!--script for my use -->
+        <script async src="js/base.js"></script>
     </body>
+
+
 </html>

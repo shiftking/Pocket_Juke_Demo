@@ -9,3 +9,6 @@
 .offset_top{
   margin-top: 10px;
 }
+.dont_show{
+  display: none;
+}

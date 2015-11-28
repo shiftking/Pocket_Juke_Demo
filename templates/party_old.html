@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  </head>
+    </head>
+    <body>
+      <div class="container">
+        <div class ="row">
+          <header class="bgimage">
+            <div class="panel panel-default col-xs-3 col-xs-offset-1 offset_top">
+              <div >
+                <h1 class="">Pocket Juke<h1>
+              </div>
+              <div class="panel-body">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-xs-2">
+                        Your personal DJ
+                      </div>
+                      <div class="col-xs-1">
+                          <a href ="{{ logout_url|safe }}">Logout</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default col-xs-3 col-xs-offset-2 offset_top">
+              <div class="panel-body">
+                <form action="/party?vote=leave" method="post">
+                    <button type="submit" class="btn btn-default">Leave Party</button>
+                </form>
+              </div>
+            </div>
+          </header>
+        </div>
+        <div class="container">
+            <div class="row">
+              <h1>Welcom to the Party : {{party_name}}</h1>
+
+            </div>
+            <div class="row">
+              <div class="col-xs-3 col-xs-offset-2">
+                <form id="song_search" action="/party?vote=false" method="post">
+                    <input id="query" type=text name="song_name"class="form-control" placeholder="Name of a song">
+                    <button type="submit" class="btn btn-default">Submit Song</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-8 col-xs-offset-2">
+
+                </form>
+                  <table class="table">
+                      <tr>
+
+                          <th>Name</th>
+                          <th>date</th>
+
+
+                          <th>Vote</th>
+                      </tr>
+                      {% for songs in queue %}
+                      <tr>
+                          <td>{{songs['song_name']}}</td>
+                          <td>{{songs['date']}}</td>
+                          <td><form action="/party?vote=true" method="post">
+                              <button type="submit" class="btn btn-default">Vote</button>
+                              <input type="hidden" name="song_id" value="{{songs.song_id}}">
+                              </form>
+
+                          </td>
+
+                      </tr>
+                      {% endfor %}
+                  </table>
+              </div>
+        </div>
+
+    </div>
+
+    </body>
+</html>

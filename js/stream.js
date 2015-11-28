@@ -1,3 +1,10 @@
+var templateSource = document.getElementById('results-template').innerHTML,
+    template = Handlebars.compile(templateSource),
+    resultsPlaceholder = document.getElementById('results'),
+    playingCssClass = 'playing',
+    audioObject = null;
+
+
 
 results.addEventListener('click', function (e) {
     var target = e.target;
@@ -7,7 +14,7 @@ results.addEventListener('click', function (e) {
         } else {
             if (audioObject) {
                 audioObject.pause();
-            }
+            }//when the cover is selected the tracks are searched
             fetchTracks(target.getAttribute('data-album-id'), function (data) {
                 audioObject = new Audio(data.tracks.items[0].preview_url);
                 audioObject.play();
@@ -22,7 +29,7 @@ results.addEventListener('click', function (e) {
         }
     }
 });
-
+//sets up the function to search for the albums
 var searchAlbums = function (query) {
     $.ajax({
         url: 'https://api.spotify.com/v1/search',
@@ -35,6 +42,7 @@ var searchAlbums = function (query) {
         }
     });
 };
+//sets up the function to search
 var fetchTracks = function (albumId, callback) {
     $.ajax({
         url: 'https://api.spotify.com/v1/albums/' + albumId,
@@ -43,8 +51,8 @@ var fetchTracks = function (albumId, callback) {
         }
     });
 };
-
-document.getElementById('search-form').addEventListener('submit', function (e) {
+//sets the event listener to the form
+document.getElementById('song_search').addEventListener('submit', function (e) {
     e.preventDefault();
     searchAlbums(document.getElementById('query').value);
 }, false);
