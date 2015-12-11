@@ -1,14 +1,14 @@
 /** google global namespace for Google projects. */
-var google = google || {};
+//var google = google || {};
 
 /** appengine namespace for Google Developer Relations projects. */
-google.appengine = google.appengine || {};
+//google.appengine = google.appengine || {};
 
 /** samples namespace for App Engine sample code. */
-google.appengine.samples = google.appengine.samples || {};
+//google.appengine.samples = google.appengine.samples || {};
 
 /** hello namespace for this sample. */
-google.appengine.samples.hello = google.appengine.samples.hello || {};
+//google.appengine.samples.hello = google.appengine.samples.hello || {};
 
 
 /**Enables the event listener for that button
@@ -36,11 +36,13 @@ var searchAlbums = function (query) {
             q: query,
             type: 'track',
             market: 'US',
-            limit: '1'
+            limit: '10'
         },
         success: function (response) {
+          //we need to get the template
+          $.get("")
 
-            document.getElementById("results").innerHTML = response;
+
         }
     });
 };
